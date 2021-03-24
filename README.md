@@ -27,7 +27,7 @@
  ## 1. First
  ***The Kotlin project that is going to be analyzed*** should be where the Docker image is going to run.
  ## 2. **Docker**
- If Docker is installed (if it is not, [install it](https://www.docker.com/get-started) and there is a project to be analyzed in a directory D, the Docker image can run in that directory D. The Docker image is [b12koe1/bogdanbc-ces-repository](https://hub.docker.com/r/b12koe1/bogdanbc-ces-repository) . The generic form of the command to be executed is:
+ If Docker is installed (if it is not, [install it](https://www.docker.com/get-started)) and there is a project to be analyzed in a directory D, the Docker image can run in that directory D. The Docker image is [b12koe1/bogdanbc-ces-repository](https://hub.docker.com/r/b12koe1/bogdanbc-ces-repository) . The generic form of the command to be executed is:
 
     sudo docker run -v $PWD/<project_to_be_analyzed>:/detektDx/<project_to_be_analyzed> -v $PWD/dx-platform_properties:/detektDx/dx-platform_properties b12koe1/bogdanbc-ces-repository bash -c "kotlin DetektDxKt detekt"
 
