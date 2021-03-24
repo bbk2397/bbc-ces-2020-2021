@@ -1,24 +1,38 @@
 
+
 # detektDx
   **detektDx** is a converter for the output format of **detekt** to a property file compatible with **Dx-Platform**. **detektDx** uses currently **detekt v.1.16.0**.
+
+# Your First Run In Two Steps
+## 1. Clone [detekt](https://github.com/detekt/detekt) with Git
+
+    git clone https://github.com/detekt/detekt.git
+## 2. Execute:
+    sudo docker run -v $PWD/detekt:/detektDx/detekt -v $PWD/dx-platform_properties:/detektDx/dx-platform_properties b12koe1/bogdanbc-ces-repository bash -c "kotlin DetektDxKt detekt"
+ **The Dx-Platform output property file must be in the directory dx-platform_properties**. This property file can be imported in the Dx-Platform.
 
 # Features
  1. **Compability**: with Dx-Platform: based on the output of the detekt static analyzer a property file that can be understood by Dx-Platform is generated
  2. **Performance**: detektDx uses the detekt flag called **--parallel** for a better performance for most files on most machines
  3. **Portability**: by using Docker detektDx can **run on any machine** without having to try too much to respect other requirements
 
- # ***DESCRIPTION***
- ## TODO come back to describe the input and the output, e.g. what the values mean (some properties have a number appended to the name and some properties have values 1 or greater than 1). Add two examples.
+# Output Description
+* The output is a list with 4-tuples: **category**, **file**, **name**, and **value**.
+* There is only one **category**: issues-by-detekt-1.16.0
+* The **file** is a relative path to a file.
+* There are two types of **names**: ending with a number and not ending with a number. A name represents an issue found by detekt, e.g. . The appended number, if exists, it represents the minimum number of times the issue has to be in a file for detekt to warn about the issue.
+* The **value** represents the number of times detekt finds the issue in the file.
 
 # Requirements
- ## 1. Before trying to satisfy these requirements: where should be some of the software below?
- ***The Kotlin project that is going to be analyzed*** and ***the detektDx Docker image*** should be in the same directory **D**. The output of detektDx will be in a directory **D2** found in the same directory **D**.
+ ## 1. First
+ ***The Kotlin project that is going to be analyzed*** should be where the Docker image is going to run.
  ## 2. **Docker**
- If Docker is installed and the next two files, detektDx/detekt and detektDx/dx-platform_properties, are on the same location, the Docker image [b12koe1/bogdanbc-ces-repository](https://hub.docker.com/r/b12koe1/bogdanbc-ces-repository) can be used to generate the property files.
+ If Docker is installed (if it is not, [install it](https://www.docker.com/get-started) and there is a project to be analyzed in a directory D, the Docker image can run in that directory D. The Docker image is [b12koe1/bogdanbc-ces-repository](https://hub.docker.com/r/b12koe1/bogdanbc-ces-repository) . The generic form of the command to be executed is:
 
-sudo docker run -v $PWD/detekt:/detektDx/detekt -v $PWD/dx-platform_properties:/detektDx/dx-platform_properties b12koe1/bogdanbc-ces-repository bash -c "kotlin DetektDxKt detekt"
+    sudo docker run -v $PWD/<project_to_be_analyzed>:/detektDx/<project_to_be_analyzed> -v $PWD/dx-platform_properties:/detektDx/dx-platform_properties b12koe1/bogdanbc-ces-repository bash -c "kotlin DetektDxKt detekt"
+
 ## 3. A Kotlin project for analysis
-Any of the next two is all right.
+Here are two Kotlin projects as examples that can be used for analysis.
 
 ### Example 1: [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
   This could be cloned:
@@ -37,18 +51,16 @@ Any of the next two is all right.
     dx-platform-2.0.0-ALPHA/.dx-platform/
 
  2. Create a new Dx-Platform project with the downloaded Kotlin project
- 3. Check whether the Kotlin files are labeled with Kotlin. If the Kotlin files are not labeled with Kotlin add label for them, add label for the Kotlin files.
+ 3. Check whether the Kotlin files are labeled with Kotlin. If the Kotlin files are not labeled with Kotlin add label for them.
 
-# Quick Start
+# Detailed Example
 
- 1. **Run detektDx** with the downloaded Kotlin project **KP1**
+ 1. **Run detektDx** with the downloaded Kotlin project **KP1** by running its container [container](https://hub.docker.com/r/b12koe1/bogdanbc-ces-repository)
  2. **Wait** until detektDx completes its execution
- 3. (***Optional***) **Check** the directory:
+ 3. (***Optional***) **Check** the directory below to see the generated file:
     `/dx-platform_properties`
     A file **F** must have been generated in this directory. This file must have the name:
-    `dx_platform_properties**<start_timestamp_of_output_generation_process>**.json`
-    Example:
-      `dx_platform_properties20210324194753.json`
+    `b.json`
  4. **Import** this file **F** to **Dx-Platform** by following the next steps
  5. Select **Configure** the **Dx-Platform project** for the Kotlin project **KP1**
  6. Select **Upload Properties**
@@ -59,10 +71,10 @@ Any of the next two is all right.
 11. In the combo box for **Code Activity** select **issues-by-detekt-1.16.0** (this is the category of all properties currently generated by detektDx.
 12. Depending on the issues detected by detekt, various labels can be selected. Examples of such labels are: **MagicNumber**, **EmptyFunctionBlock**, **ComplexMethod15**. Note that some label are followed by a number. That number means that starting with the value of that number the specific issue associated with the number will be reported. For example, if the complexity of a method is >=15, then an issue ComplexMethod15 will be reported. 2 images of **System Map**, each one for a different Kotlin project, below:
 ```
-![Image for **detekt**:](images/system_map_after_importing_generated_property_file_for_dk_project.png)
+![Image for **detekt**:](/images/system_map_after_importing_generated_property_file_for_dk_project.png)
 ```
 ```
-![mage for **kotlinx.coroutines**:](system_map_after_importing_generated_property_file_for_kco_project.png)
+![mage for **kotlinx.coroutines**:](/images/system_map_after_importing_generated_property_file_for_kco_project.png)
 ```
 # Preconditoins
  1. **detektDx** must receive ***exactly one argument***
