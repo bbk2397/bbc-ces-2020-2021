@@ -3,12 +3,12 @@
 # detektDx
   **detektDx** is a converter for the output format of **detekt** to a property file that can be used as input for and is understandable with **Dx-Platform**. **detektDx** uses currently **detekt v.1.16.0**.
 
-# Your First Run In Two Steps
-## 1. Clone [detekt](https://github.com/detekt/detekt) with Git
+# Your First Run In Two Steps (with Docker)
+## 1. Clone [detekt](https://github.com/detekt/detekt) with Git (this project will be given as input to detektDx)
 
     git clone https://github.com/detekt/detekt.git
 ## 2. Execute:
-    sudo docker run -v $PWD/detekt:/detektDx/detekt -v $PWD/dx-platform_properties:/detektDx/dx-platform_properties b12koe1/bogdanbc-ces-repository bash -c "kotlin DetektDxKt detekt"
+    docker run -v $PWD/detekt:/detektDx/detekt -v $PWD/dx-platform_properties:/detektDx/dx-platform_properties b12koe1/bogdanbc-ces-repository bash -c "kotlin DetektDxKt detekt"
  **The Dx-Platform output property file must be in the directory dx-platform_properties**. This property file can be imported in the Dx-Platform.
 
 # Features
