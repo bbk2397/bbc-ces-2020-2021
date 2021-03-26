@@ -1,7 +1,7 @@
 
 
 # detektDx
-  **detektDx** is a converter for the output format of **detekt** to a property file that can be used as input for and is understandable with **Dx-Platform**. **detektDx** uses currently **detekt v.1.16.0**.
+  **detektDx** is a converter for the output format of **detekt** to a property file that can be used as input for and is understandable by **Dx-Platform**. **detektDx** uses currently **detekt v.1.16.0**.
 
 # Your First Run In Two Steps (with Docker)
 ## 1. Clone [detekt](https://github.com/detekt/detekt) with Git (this project will be given as input to detektDx)
